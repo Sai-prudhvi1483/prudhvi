@@ -22,7 +22,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>io.fabric8</groupId>
-  <artifactId>kubernetes-client-project</artifactId>
+  <artifactId>Roche_Utility</artifactId>
   <version>6.12-SNAPSHOT</version>
   <packaging>pom</packaging>
 

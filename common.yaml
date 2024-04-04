@@ -32,7 +32,7 @@ spec:
               key: dbname
               name: mariadb-secret
         image: imanurag30/wikimedia:v1
-        name: ''
+        name: Infosys_Container
         ports:
         - containerPort: 8080
           name: httpd-port

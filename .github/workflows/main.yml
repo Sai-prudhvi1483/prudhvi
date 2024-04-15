@@ -25,7 +25,7 @@ jobs:
 
     - name: Run script
       run: |
-        export VERSION=$(echo ${{ github.ref }})
+        export VERSION=${{ secrets.VERSION }}
         python script.py
 
     - name: Commit and push if it changed

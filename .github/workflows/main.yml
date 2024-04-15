@@ -23,9 +23,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install requests
 
-    - name: Run script
+     - name: Run script
       run: |
-        export VERSION=$(echo ${{ github.ref }})
+        export VERSION='1.0.0'
         python script.py
 
     - name: Commit and push if it changed

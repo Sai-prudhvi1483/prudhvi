@@ -20,7 +20,7 @@ def update_secret():
         repo = g.get_repo(f"{REPO_OWNER}/{REPO_NAME}")
 
         # Update the secret
-        repo.create_or_update_secret(SECRET_NAME, NEW_VALUE)
+        g.get_user().get_repo(REPO_NAME).create_secret(SECRET_NAME, NEW_VALUE)
 
         print(f"Secret {SECRET_NAME} updated successfully!")
     except Exception as e:

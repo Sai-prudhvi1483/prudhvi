@@ -2,7 +2,7 @@ import os
 import requests
 import json
 
-GITHUB_TOKEN = "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"
+GITHUB_TOKEN = "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"
 REPO_OWNER = "Sai-prudhvi1483"
 REPO_NAME = "prudhvi"
 VARIABLES = {

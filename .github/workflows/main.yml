@@ -20,9 +20,7 @@ jobs:
     - name: Install dependencies
       run: pip install PyGithub
 
-    - name: Update Version
-      run: |
-        export VERSION='1.0.0'
-        python script.py
+    - name: Run script
+      run: python script.py
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}

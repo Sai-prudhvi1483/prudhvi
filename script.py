@@ -1,46 +1,33 @@
-import os
-import requests
-import json
+from github import Github
 
-GITHUB_TOKEN = "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"
+# Your GitHub personal access token
+GITHUB_TOKEN = "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"
+
+# Repository details
 REPO_OWNER = "Sai-prudhvi1483"
 REPO_NAME = "prudhvi"
-VARIABLES = {
-    "VERSION": os.getenv('VERSION', '1.0.0'),  # Default to '1.0.0' if VERSION is not set
-    # Add more variables as needed
-}
-HEADERS = {
-    "Authorization": f"token {GITHUB_TOKEN}",
-    "Accept": "application/vnd.github+json"
-}
 
-def increment_version(version):
-    # Split the version into major, minor, and patch numbers
-    major, minor, patch = map(int, version.split('.'))
+# Environment variable to update
+ENV_VAR_NAME = "VERSION"
+NEW_VALUE = "1.0.5"  # New version number
 
-    # Increment the patch number
-    patch += 15
+def update_env_var():
+    try:
+        g = Github(GITHUB_TOKEN)
+        repo = g.get_repo(f"{REPO_OWNER}/{REPO_NAME}")
 
-    # Join the numbers back into a version string
-    new_version = f"{major}.{minor}.{patch}"
+        # Get the environment named 'production'
+        env = repo.get_environment("production")
 
-    return new_version
+        # Delete the old environment variable
+        env.remove_secret(ENV_VAR_NAME)
 
-def update_variables():
-    for key, value in VARIABLES.items():
-        # Increment the version if the key is 'VERSION'
-        if key == 'VERSION':
-            value = increment_version(value)
+        # Create a new environment variable with the updated value
+        env.add_secret(ENV_VAR_NAME, NEW_VALUE)
 
-        data = {
-            "name": key,
-            "value": value
-        }
-        response = requests.post(f"https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/actions/secrets", headers=HEADERS, data=json.dumps(data))
-        if response.status_code == 201:
-            print(f"Variable {key} updated successfully!")
-        else:
-            print(f"Failed to update variable {key}. Status code: {response.status_code}")
+        print(f"Environment variable {ENV_VAR_NAME} updated successfully!")
+    except Exception as e:
+        print(f"Error updating environment variable: {str(e)}")
 
 if __name__ == "__main__":
-    update_variables()
+    update_env_var()

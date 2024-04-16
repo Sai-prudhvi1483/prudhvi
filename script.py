@@ -1,8 +1,10 @@
 import os
 import requests
 import json
+from base64 import b64encode
 
-GITHUB_TOKEN = "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"
+
+GITHUB_TOKEN = "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"
 REPO_OWNER = "Sai-prudhvi1483"
 REPO_NAME = "prudhvi"
 VARIABLES = {
@@ -11,7 +13,7 @@ VARIABLES = {
 }
 HEADERS = {
     "Authorization": f"token {GITHUB_TOKEN}",
-    "Accept": "application/vnd.github+json"
+    "Accept": "application/vnd.github.v3+json"
 }
 
 def increment_version(version):
@@ -32,12 +34,15 @@ def update_variables():
         if key == 'VERSION':
             value = increment_version(value)
 
+        # Secrets must be Base64 encoded
+        encoded_value = b64encode(value.encode()).decode()
+
         data = {
-            "name": key,
-            "value": value
+            "encrypted_value": encoded_value,
+            "key_id": "key_id"
         }
-        response = requests.post(f"https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/actions/secrets", headers=HEADERS, data=json.dumps(data))
-        if response.status_code == 201:
+        response = requests.put(f"https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/actions/secrets/{key}", headers=HEADERS, json=data)
+        if response.status_code == 204:
             print(f"Variable {key} updated successfully!")
         else:
             print(f"Failed to update variable {key}. Status code: {response.status_code}")

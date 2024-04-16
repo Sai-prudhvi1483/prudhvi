@@ -1,15 +1,15 @@
 from github import Github
 
 # Your GitHub personal access token
-GITHUB_TOKEN = "your_github_token"
+GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
 
 # Repository details
-REPO_OWNER = "your_github_username"
-REPO_NAME = "your_repo_name"
+REPO_OWNER = "Sai-prudhvi1483"
+REPO_NAME = "prudhvi"
 
 # Environment variable to update
 ENV_VAR_NAME = "VERSION"
-NEW_VALUE = "1.0.1"  # New version number
+NEW_VALUE = "1.0.9"  # New version number
 
 def update_env_var():
     try:
